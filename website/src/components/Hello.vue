@@ -47,6 +47,19 @@ div
     methods: {
       showGame (game) {
         this.selectedGame = game
+
+        let firebaseRef
+        let userList = this.$store.state.userList
+        for (let key in userList) {
+          let userGame = userList[key]
+          if (userGame.link === game.link) {
+            firebaseRef = userGame
+            break
+          }
+        }
+
+        if (firebaseRef) this.selectedGame.firebaseRef = firebaseRef
+
         this.$root.$emit('show::modal', 'game-detail')
       }
     }

@@ -10,7 +10,8 @@ div
     .row
       .col-3(v-for='game in gamesFiltered', @click='showGame(game)')
         .game-column
-          .img(:style='{backgroundImage: `url(${game.next_page.image})`}')
+          .img(v-if='game.next_page', :style='{backgroundImage: `url(${game.next_page.image})`}')
+          .img(v-if='!game.next_page && game.image', :style='{backgroundImage: `url(${game.image})`}')
           .desc
             strong {{game.title}}
 </template>
@@ -37,7 +38,6 @@ div
       gamesFiltered () {
         if (!this.search) return this.games
         let filtered = []
-        console.log(this.games, this.$store.state)
         this.games.forEach((game) => {
           if (game.title.toLowerCase().includes(this.search.toLowerCase())) filtered.push(game)
         })
@@ -49,11 +49,6 @@ div
       showGame (game) {
         this.selectedGame = game
         this.$root.$emit('show::modal', 'game-detail')
-      },
-      wantToPlay () {
-        console.log('SD')
-        this.$store.state.wantToPlay.push(this.selectedGame)
-        console.log(this.$store.state.wantToPlay)
       }
     }
   }

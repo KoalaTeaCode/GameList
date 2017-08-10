@@ -9,8 +9,21 @@
 </template>
 
 <script>
+
 export default {
-  name: 'app'
+  name: 'app',
+  mounted () {
+    this.$store.state.firebase.auth()
+    .onAuthStateChanged((user) => {
+      if (user) {
+        this.$store.state.user = user
+        this.$store.dispatch('getUserLists')
+      } else {
+        // User is signed out.
+        // ...
+      }
+    })
+  }
 }
 </script>
 
