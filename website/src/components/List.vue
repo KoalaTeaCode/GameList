@@ -4,11 +4,12 @@ div
   .container-fluid.banner
     .row
       .col-6.offset-3.text-center
-        h1 {{type}} List
+        h1 List
         input.form-control(v-model='search')
   .container.game-container
-    .row
-      .col-3(v-for='game in gamesFiltered', @click='showGame(game)')
+    .row(v-for='(list, key) in groupedGames')
+      h2.col-12 {{key}}
+      .col-3(v-for='game in list', @click='showGame(game)')
         .game-column
           .img(v-if='game.next_page', :style='{backgroundImage: `url(${game.next_page.image})`}')
           .img(v-if='!game.next_page && game.image', :style='{backgroundImage: `url(${game.image})`}')
@@ -17,6 +18,7 @@ div
 </template>
 
 <script>
+  import groupBy from 'lodash/groupBy'
   import gamesDetailModal from './gamesDetailModal'
 
   export default {
@@ -32,7 +34,7 @@ div
       }
     },
     mounted () {
-      this.games = this.$store.state[this.type]
+      this.games = this.$store.state.userList
     },
     computed: {
       gamesFiltered () {
@@ -43,6 +45,9 @@ div
         })
 
         return filtered
+      },
+      groupedGames () {
+        return groupBy(this.gamesFiltered, 'status')
       }
     },
     methods: {

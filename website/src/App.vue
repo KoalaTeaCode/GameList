@@ -1,9 +1,20 @@
 <template>
   <div id="app">
-    <div>
-      <router-link :to="{ name: 'Hello' }">Home</router-link>
-      <router-link :to="{ name: 'List', params: {type: 'wantToPlay'} }">Want To Play</router-link>
-    </div>
+    <nav class="navbar navbar-toggleable-md">
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <router-link class='nav-link' :to="{ name: 'Hello' }">Home</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link class='nav-link' :to="{ name: 'List' }">List</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link class='nav-link' :to="{ name: 'Auth' }">Register</router-link>
+          </li>
+        </ul>
+      </div>
+    </nav>
     <router-view></router-view>
   </div>
 </template>

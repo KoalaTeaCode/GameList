@@ -15,7 +15,7 @@ export default new Router({
       component: Hello
     },
     {
-      path: '/list/:type',
+      path: '/list',
       name: 'List',
       component: List,
       props: true

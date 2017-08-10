@@ -59,17 +59,18 @@ const actions = {
   },
   getUserLists ({ commit, state }) {
     let wantToPlayref = state.firebase.database().ref('game-lists/' + state.user.uid)
-    wantToPlayref.on('value', (snapshot) => {
-      let array = snapshot.val()
-      if (array) state.wantToPlay = array
-      snapshot.forEach((item) => {
-        let userItem = item.val()
-        userItem.key = item.key
-        state.userList.push(userItem)
-      })
-    })
+    // wantToPlayref.on('value', (snapshot) => {
+    //   let array = snapshot.val()
+    //   if (array) state.wantToPlay = array
+    //   snapshot.forEach((item) => {
+    //     let userItem = item.val()
+    //     userItem.key = item.key
+    //     state.userList.push(userItem)
+    //   })
+    // })
 
     wantToPlayref.on('child_added', (data) => {
+      console.log('sd')
       let userItem = data.val()
       userItem.key = data.key
       state.userList.push(userItem)
